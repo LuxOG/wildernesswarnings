@@ -39,12 +39,13 @@ public class WildernessWarningsPlugin extends Plugin
 
 	//Chop-down Canoe-station. Toggleable in config?
 	//Travel to Wilderness Pond, Travel to Ferox Enclave?
+	//TODO: hunter/max cape black chins teleport
 
 	//TODO: Exit Cave exit, RegionID 11842 Corp Cave
 	static final String WILDERNESS_ACCESS_MENU_ENTRIES = "rub,Burning*\nChaos*,Burning*\nBandit*,Burning*" +
 		"\nLava*,Burning*\nBreak,Annakarl*\nBreak,Dareeyak\nBreak,Carrallangar\nBreak,Ghorrock\nBreak,Wilderness*\n" +
-		"Break,Ice Plateau\nTeleport,Revenant Cave*\nTeleport,Wilderness*\nCross,Wilderness*\nTravel to,Wilderness*\n" +
-		"Travel*,Ferox*\n";
+		"Break,Ice Plateau\nTeleport,Revenant Cave*\nTeleport,Wilderness*\nCross,Wilderness*\nTravel to Wilderness*,*\n" +
+		"Travel to Ferox*,*\nHunter Cape*,Teleport\nPass-Through,Barrier";
 	final List<CustomSwap> customHides = new ArrayList<>();
 
 	@Inject
@@ -108,7 +109,6 @@ public class WildernessWarningsPlugin extends Plugin
 				return;
 			}
 			menuEntries = filterEntries(menuEntries);
-			client.setMenuEntries(menuEntries);
 
 			//Hide lever pull only in edgeville or Ardougne
 			if (client.getLocalPlayer().getWorldLocation().getRegionID() == 12342
@@ -128,6 +128,7 @@ public class WildernessWarningsPlugin extends Plugin
 			{
 
 			}
+			client.setMenuEntries(menuEntries);
 
 		}
 	}
