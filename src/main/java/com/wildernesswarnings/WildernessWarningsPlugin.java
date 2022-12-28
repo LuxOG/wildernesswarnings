@@ -20,6 +20,7 @@ import net.runelite.api.MenuAction;
 import net.runelite.api.MenuEntry;
 import net.runelite.api.events.ClientTick;
 import net.runelite.api.events.GameStateChanged;
+import net.runelite.client.Notifier;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.events.ConfigChanged;
@@ -48,6 +49,9 @@ public class WildernessWarningsPlugin extends Plugin
 	static final String EDGEVILLE_AND_ARDOUGNE_LEVER = "Pull,Lever\n";
 	static final String CORP_BEAST_CAVE_EXIT = "Exit,Cave exit\n";
 	final List<CustomSwap> customHides = new ArrayList<>();
+
+	@Inject
+	private Notifier notifier;
 
 	@Inject
 	private Client client;
@@ -216,13 +220,15 @@ public class WildernessWarningsPlugin extends Plugin
 			customHides.addAll(loadCustomSwaps(WILDERNESS_ACCESS_MENU_ENTRIES));
 		}
 		customSwaps();
+
 		if (client.getLocalPlayer().getWorldLocation().getRegionID() == 7770
 			|| client.getLocalPlayer().getWorldLocation().getRegionID() == 7769) {
 			if (client.getItemContainer(InventoryID.INVENTORY).contains(ItemID.CLUE_SCROLL_MASTER)
 				|| client.getItemContainer(InventoryID.INVENTORY).contains(ItemID.CLUE_SCROLL_ELITE)
 				|| client.getItemContainer(InventoryID.INVENTORY).contains(ItemID.CLUE_SCROLL_HARD)) {
-
+					notifier.notify("You are on a target world!");
 			}
 		}
+
 	}
 }
