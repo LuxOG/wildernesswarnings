@@ -14,6 +14,8 @@ import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.ChatMessageType;
 import net.runelite.api.Client;
 import net.runelite.api.GameState;
+import net.runelite.api.InventoryID;
+import net.runelite.api.ItemID;
 import net.runelite.api.MenuAction;
 import net.runelite.api.MenuEntry;
 import net.runelite.api.events.ClientTick;
@@ -36,16 +38,15 @@ import net.runelite.client.util.WildcardMatcher;
 public class WildernessWarningsPlugin extends Plugin
 {
 
-
-	//Chop-down Canoe-station. Toggleable in config?
-	//Travel to Wilderness Pond, Travel to Ferox Enclave?
-	//TODO: hunter/max cape black chins teleport
-
-	//TODO: Exit Cave exit, RegionID 11842 Corp Cave
+	//TODO: enter wilderness portals in house
 	static final String WILDERNESS_ACCESS_MENU_ENTRIES = "rub,Burning*\nChaos*,Burning*\nBandit*,Burning*" +
-		"\nLava*,Burning*\nBreak,Annakarl*\nBreak,Dareeyak\nBreak,Carrallangar\nBreak,Ghorrock\nBreak,Wilderness*\n" +
-		"Break,Ice Plateau\nTeleport,Revenant Cave*\nTeleport,Wilderness*\nCross,Wilderness*\nTravel to Wilderness*,*\n" +
-		"Travel to Ferox*,*\nHunter Cape*,Teleport\nPass-Through,Barrier";
+		"\nLava*,Burning*\nBreak,Annakarl*\nBreak,Dareeyak*\nBreak,Carrallangar*\nBreak,Ghorrock*\nBreak,Wilderness*\n" +
+		"Break,Ice Plateau*\nTeleport,Revenant Cave*\nTeleport,Wilderness*\nCross,Wilderness*\nTravel to Wilderness*,*\n" +
+		"Travel to Ferox*,*\nHunter Cape*,Teleport\nPass-Through,Barrier\nEnter,Annakarl*\nEnter,Carrallangar*\n" +
+		"Enter,Dareeyak*\nEnter,Ice Plateau*\nEnter,Ghorrock\n";
+
+	static final String EDGEVILLE_AND_ARDOUGNE_LEVER = "Pull,Lever\n";
+	static final String CORP_BEAST_CAVE_EXIT = "Exit,Cave exit\n";
 	final List<CustomSwap> customHides = new ArrayList<>();
 
 	@Inject
@@ -80,6 +81,19 @@ public class WildernessWarningsPlugin extends Plugin
 
 	private Collection<? extends CustomSwap> loadCustomSwaps(String customSwaps)
 	{
+		if (client.getGameState() == GameState.LOGGED_IN) {
+			//Edgeville or Ardougne Level
+			if (client.getLocalPlayer().getWorldLocation().getRegionID() == 12342
+				|| client.getLocalPlayer().getWorldLocation().getRegionID() == 10291)
+			{
+				customSwaps += EDGEVILLE_AND_ARDOUGNE_LEVER;
+			}
+			//Corporeal Beast Cave
+			else if (client.getLocalPlayer().getWorldLocation().getRegionID() == 11842)
+			{
+				customSwaps += CORP_BEAST_CAVE_EXIT;
+			}
+		}
 		List<CustomSwap> swaps = new ArrayList<>();
 		for (String customSwap : customSwaps.split("\n"))
 		{
@@ -110,24 +124,6 @@ public class WildernessWarningsPlugin extends Plugin
 			}
 			menuEntries = filterEntries(menuEntries);
 
-			//Hide lever pull only in edgeville or Ardougne
-			if (client.getLocalPlayer().getWorldLocation().getRegionID() == 12342
-				|| client.getLocalPlayer().getWorldLocation().getRegionID() == 10291)
-			{
-
-			}
-			//replace with check for being in house. Activate Obelisk, Teleport to Destination Obelisk
-			//not sure what to do for portal nexus. Notification on menu open? Toggleable?
-			if (client.getLocalPlayer().getWorldLocation().getRegionID() == 7770)
-			{
-
-			}
-			//Ferox Enclave Pass-Through Barrier
-			if (client.getLocalPlayer().getWorldLocation().getRegionID() == 12344
-				|| client.getLocalPlayer().getWorldLocation().getRegionID() == 12600)
-			{
-
-			}
 			client.setMenuEntries(menuEntries);
 
 		}
@@ -212,6 +208,21 @@ public class WildernessWarningsPlugin extends Plugin
 		{
 			return;
 		}
+		if (client.getLocalPlayer().getWorldLocation().getRegionID() == 12342
+			|| client.getLocalPlayer().getWorldLocation().getRegionID() == 10291
+			|| client.getLocalPlayer().getWorldLocation().getRegionID() == 11842)
+		{
+			customHides.clear();
+			customHides.addAll(loadCustomSwaps(WILDERNESS_ACCESS_MENU_ENTRIES));
+		}
 		customSwaps();
+		if (client.getLocalPlayer().getWorldLocation().getRegionID() == 7770
+			|| client.getLocalPlayer().getWorldLocation().getRegionID() == 7769) {
+			if (client.getItemContainer(InventoryID.INVENTORY).contains(ItemID.CLUE_SCROLL_MASTER)
+				|| client.getItemContainer(InventoryID.INVENTORY).contains(ItemID.CLUE_SCROLL_ELITE)
+				|| client.getItemContainer(InventoryID.INVENTORY).contains(ItemID.CLUE_SCROLL_HARD)) {
+
+			}
+		}
 	}
 }
