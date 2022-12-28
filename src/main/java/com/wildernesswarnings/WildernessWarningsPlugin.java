@@ -11,19 +11,13 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
-import net.runelite.api.ChatMessageType;
 import net.runelite.api.Client;
 import net.runelite.api.GameState;
-import net.runelite.api.InventoryID;
-import net.runelite.api.ItemID;
-import net.runelite.api.MenuAction;
 import net.runelite.api.MenuEntry;
 import net.runelite.api.events.ClientTick;
-import net.runelite.api.events.GameStateChanged;
 import net.runelite.client.Notifier;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
-import net.runelite.client.events.ConfigChanged;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginDependency;
 import net.runelite.client.plugins.PluginDescriptor;
@@ -33,7 +27,7 @@ import net.runelite.client.util.WildcardMatcher;
 
 @Slf4j
 @PluginDescriptor(
-	name = "WildernessWarnings"
+	name = "Wilderness Warnings"
 )
 @PluginDependency(MenuEntrySwapperPlugin.class)
 public class WildernessWarningsPlugin extends Plugin
