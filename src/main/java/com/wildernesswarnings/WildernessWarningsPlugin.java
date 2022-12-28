@@ -85,7 +85,8 @@ public class WildernessWarningsPlugin extends Plugin
 
 	private Collection<? extends CustomSwap> loadCustomSwaps(String customSwaps)
 	{
-		if (client.getGameState() == GameState.LOGGED_IN) {
+		if (client.getGameState() == GameState.LOGGED_IN)
+		{
 			//Edgeville or Ardougne Level
 			if (client.getLocalPlayer().getWorldLocation().getRegionID() == 12342
 				|| client.getLocalPlayer().getWorldLocation().getRegionID() == 10291)
@@ -221,14 +222,15 @@ public class WildernessWarningsPlugin extends Plugin
 		}
 		customSwaps();
 
-		if (client.getLocalPlayer().getWorldLocation().getRegionID() == 7770
-			|| client.getLocalPlayer().getWorldLocation().getRegionID() == 7769) {
-			if (client.getItemContainer(InventoryID.INVENTORY).contains(ItemID.CLUE_SCROLL_MASTER)
-				|| client.getItemContainer(InventoryID.INVENTORY).contains(ItemID.CLUE_SCROLL_ELITE)
-				|| client.getItemContainer(InventoryID.INVENTORY).contains(ItemID.CLUE_SCROLL_HARD)) {
-					notifier.notify("You are on a target world!");
-			}
-		}
+		//TODO. Some way to check if player has any master, elite or hard without listing every item ID?
+//		if (client.getLocalPlayer().getWorldLocation().getRegionID() == 7770
+//			|| client.getLocalPlayer().getWorldLocation().getRegionID() == 7769) {
+//			if (client.getItemContainer(InventoryID.INVENTORY).contains(ItemID.CLUE_SCROLL_MASTER)
+//				|| client.getItemContainer(InventoryID.INVENTORY).contains(ItemID.CLUE_SCROLL_ELITE)
+//				|| client.getItemContainer(InventoryID.INVENTORY).contains(ItemID.CLUE_SCROLL_HARD)) {
+//					notifier.notify("You are on a target world!");
+//			}
+//		}
 
 	}
 }
