@@ -113,8 +113,7 @@ public class WildernessWarningsPlugin extends Plugin
 
 	public void customSwaps()
 	{
-		if (client.getWorld() == 319 || client.getWorld() == 474 || client.getWorld() == 318 ||
-			client.getWorld() == 533 || client.getWorld() == 365)
+		if (client.getWorld() == 474 || client.getWorld() == 533 || client.getWorld() == 365)
 		{
 			MenuEntry[] menuEntries = client.getMenuEntries();
 			if (menuEntries.length == 0)
