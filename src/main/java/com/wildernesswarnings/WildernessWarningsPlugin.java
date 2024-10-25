@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.function.Supplier;
+import net.runelite.api.widgets.Widget;
+import net.runelite.client.callback.ClientThread;
 import javax.inject.Inject;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -15,6 +17,8 @@ import net.runelite.api.Client;
 import net.runelite.api.GameState;
 import net.runelite.api.MenuEntry;
 import net.runelite.api.events.ClientTick;
+import net.runelite.api.events.MenuOptionClicked;
+import net.runelite.api.events.WidgetLoaded;
 import net.runelite.client.Notifier;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
@@ -38,7 +42,7 @@ public class WildernessWarningsPlugin extends Plugin
 		"Break,Ice Plateau*\nTeleport,Revenant Cave*\nTeleport,Wilderness*\nCross,Wilderness*\nTravel to Wilderness*,*\n" +
 		"Travel to Ferox*,*\nHunter Cape*,Teleport\nPass-Through,Barrier\nblack chin*,*\nEnter,Annakarl*\nEnter,Carrallanger*\n" +
 		"Enter,Dareeyak*\nEnter,Ice Plateau*\nEnter,Ghorrock\nActivate,Obelisk\nTeleport to Destination,Obelisk\nCast,Ghorrock*\nCast,Annakarl\n" +
-		"Cast,Carrallanger\nCast,Dareeyak\nCast, Ice Plat*\n";
+		"Cast,Carrallanger\nCast,Dareeyak\nCast, Ice Plat*\nEnter Wilderness\n";
 
 	static final String EDGEVILLE_AND_ARDOUGNE_LEVER = "Pull,Lever\n";
 	static final String CORP_BEAST_CAVE_EXIT = "Exit,Cave exit\n";
@@ -49,6 +53,9 @@ public class WildernessWarningsPlugin extends Plugin
 
 	@Inject
 	private Client client;
+
+	@Inject
+	private ClientThread clientThread;
 
 	@Inject
 	private WildernessWarningsConfig config;
@@ -214,16 +221,6 @@ public class WildernessWarningsPlugin extends Plugin
 			customHides.addAll(loadCustomSwaps(WILDERNESS_ACCESS_MENU_ENTRIES));
 		}
 		customSwaps();
-
-		//TODO. Some way to check if player has any master, elite or hard without listing every item ID?
-//		if (client.getLocalPlayer().getWorldLocation().getRegionID() == 7770
-//			|| client.getLocalPlayer().getWorldLocation().getRegionID() == 7769) {
-//			if (client.getItemContainer(InventoryID.INVENTORY).contains(ItemID.CLUE_SCROLL_MASTER)
-//				|| client.getItemContainer(InventoryID.INVENTORY).contains(ItemID.CLUE_SCROLL_ELITE)
-//				|| client.getItemContainer(InventoryID.INVENTORY).contains(ItemID.CLUE_SCROLL_HARD)) {
-//					notifier.notify("You are on a target world!");
-//			}
-//		}
 
 	}
 }
