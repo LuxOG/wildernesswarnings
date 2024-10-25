@@ -33,13 +33,12 @@ import net.runelite.client.util.WildcardMatcher;
 public class WildernessWarningsPlugin extends Plugin
 {
 
-	//TODO: enter wilderness portals in house
 	static final String WILDERNESS_ACCESS_MENU_ENTRIES = "rub,Burning*\nChaos*,Burning*\nBandit*,Burning*" +
-		"\nLava*,Burning*\nBreak,Annakarl*\nBreak,Dareeyak*\nBreak,Carrallangar*\nBreak,Ghorrock*\nBreak,Wilderness*\n" +
+		"\nLava*,Burning*\nBreak,Annakarl*\nBreak,Dareeyak*\nBreak,Carrallanger*\nBreak,Ghorrock*\nBreak,Wilderness*\n" +
 		"Break,Ice Plateau*\nTeleport,Revenant Cave*\nTeleport,Wilderness*\nCross,Wilderness*\nTravel to Wilderness*,*\n" +
-		"Travel to Ferox*,*\nHunter Cape*,Teleport\nPass-Through,Barrier\nblack chin*,*\nEnter,Annakarl*\nEnter,Carrallangar*\n" +
+		"Travel to Ferox*,*\nHunter Cape*,Teleport\nPass-Through,Barrier\nblack chin*,*\nEnter,Annakarl*\nEnter,Carrallanger*\n" +
 		"Enter,Dareeyak*\nEnter,Ice Plateau*\nEnter,Ghorrock\nActivate,Obelisk\nTeleport to Destination,Obelisk\nCast,Ghorrock*\nCast,Annakarl\n" +
-		"Cast,Carrallangar\nCast,Dareeyak\nCast, Ice Plat*\n";
+		"Cast,Carrallanger\nCast,Dareeyak\nCast, Ice Plat*\n";
 
 	static final String EDGEVILLE_AND_ARDOUGNE_LEVER = "Pull,Lever\n";
 	static final String CORP_BEAST_CAVE_EXIT = "Exit,Cave exit\n";
