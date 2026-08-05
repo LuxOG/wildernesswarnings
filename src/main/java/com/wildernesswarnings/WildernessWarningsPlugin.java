@@ -15,6 +15,7 @@ import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Client;
 import net.runelite.api.GameState;
+import net.runelite.api.Player;
 import net.runelite.api.MenuEntry;
 import net.runelite.api.events.ClientTick;
 import net.runelite.api.events.MenuOptionClicked;
@@ -42,7 +43,7 @@ public class WildernessWarningsPlugin extends Plugin
 		"Break,Ice Plateau*\nTeleport,Revenant Cave*\nTeleport,Wilderness*\nCross,Wilderness*\nTravel to Wilderness*,*\n" +
 		"Travel to Ferox*,*\nHunter Cape*,Teleport\nPass-Through,Barrier\nblack chin*,*\nEnter,Annakarl*\nEnter,Carrallanger*\n" +
 		"Enter,Dareeyak*\nEnter,Ice Plateau*\nEnter,Ghorrock\nActivate,Obelisk\nTeleport to Destination,Obelisk\nCast,Ghorrock*\nCast,Annakarl\n" +
-		"Cast,Carrallanger\nCast,Dareeyak\nCast, Ice Plat*\nEnter Wilderness\n";
+		"Cast,Carrallanger\nCast,Dareeyak\nCast, Ice Plat*\nEnter Wilderness\nblack chin*,*\n";
 
 	static final String EDGEVILLE_AND_ARDOUGNE_LEVER = "Pull,Lever\n";
 	static final String CORP_BEAST_CAVE_EXIT = "Exit,Cave exit\n";
@@ -88,16 +89,20 @@ public class WildernessWarningsPlugin extends Plugin
 	{
 		if (client.getGameState() == GameState.LOGGED_IN)
 		{
-			//Edgeville or Ardougne Level
-			if (client.getLocalPlayer().getWorldLocation().getRegionID() == 12342
-				|| client.getLocalPlayer().getWorldLocation().getRegionID() == 10291)
+			Player localPlayer = client.getLocalPlayer();
+			if (localPlayer != null)
 			{
-				customSwaps += EDGEVILLE_AND_ARDOUGNE_LEVER;
-			}
-			//Corporeal Beast Cave
-			else if (client.getLocalPlayer().getWorldLocation().getRegionID() == 11842)
-			{
-				customSwaps += CORP_BEAST_CAVE_EXIT;
+				int regionId = localPlayer.getWorldLocation().getRegionID();
+				//Edgeville or Ardougne Level
+				if (regionId == 12342 || regionId == 10291)
+				{
+					customSwaps += EDGEVILLE_AND_ARDOUGNE_LEVER;
+				}
+				//Corporeal Beast Cave
+				else if (regionId == 11842)
+				{
+					customSwaps += CORP_BEAST_CAVE_EXIT;
+				}
 			}
 		}
 		List<CustomSwap> swaps = new ArrayList<>();
@@ -213,12 +218,15 @@ public class WildernessWarningsPlugin extends Plugin
 		{
 			return;
 		}
-		if (client.getLocalPlayer().getWorldLocation().getRegionID() == 12342
-			|| client.getLocalPlayer().getWorldLocation().getRegionID() == 10291
-			|| client.getLocalPlayer().getWorldLocation().getRegionID() == 11842)
+		Player localPlayer = client.getLocalPlayer();
+		if (localPlayer != null)
 		{
-			customHides.clear();
-			customHides.addAll(loadCustomSwaps(WILDERNESS_ACCESS_MENU_ENTRIES));
+			int regionId = localPlayer.getWorldLocation().getRegionID();
+			if (regionId == 12342 || regionId == 10291 || regionId == 11842)
+			{
+				customHides.clear();
+				customHides.addAll(loadCustomSwaps(WILDERNESS_ACCESS_MENU_ENTRIES));
+			}
 		}
 		customSwaps();
 
