@@ -18,15 +18,11 @@ import net.runelite.api.GameState;
 import net.runelite.api.Player;
 import net.runelite.api.MenuEntry;
 import net.runelite.api.events.ClientTick;
-import net.runelite.api.events.MenuOptionClicked;
-import net.runelite.api.events.WidgetLoaded;
 import net.runelite.client.Notifier;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.plugins.Plugin;
-import net.runelite.client.plugins.PluginDependency;
 import net.runelite.client.plugins.PluginDescriptor;
-import net.runelite.client.plugins.menuentryswapper.MenuEntrySwapperPlugin;
 import net.runelite.client.util.Text;
 import net.runelite.client.util.WildcardMatcher;
 
@@ -34,7 +30,6 @@ import net.runelite.client.util.WildcardMatcher;
 @PluginDescriptor(
 	name = "Wilderness Warnings"
 )
-@PluginDependency(MenuEntrySwapperPlugin.class)
 public class WildernessWarningsPlugin extends Plugin
 {
 
